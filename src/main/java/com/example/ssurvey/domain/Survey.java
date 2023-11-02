@@ -59,6 +59,9 @@ public class Survey {
 	@OneToMany(mappedBy = "survey",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("fbrCreateDate desc") //댓글 작성 일을 기준으로 내림차순
 	private List<SurveyReply> surveyReplyList;
+	
+	@Column(length = 50)
+	private String surveyTitle;
 }
 
 
