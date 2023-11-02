@@ -55,4 +55,6 @@ public class FreeBoard {
 	@OrderBy("fbrCreateDate desc") //아이디를 기준으로 내림차순
 	private List<FreeBoardReply> fbReplyList;
 	
+	@Column(length = 50)
+	private String fbTitle;
 }

@@ -29,13 +29,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "User_SEQ_GENERATOR")
 	private Integer userNo;
 	
-	@Column(nullable = false, length = 100, unique = true)
+	@Column(nullable = false, length = 100)
 	private String userName;
 	
 	@Column(nullable = false, length = 50)
 	private String userPassword;
 	
-	@Column(nullable = false, length = 50)
+	@Column(nullable = false, length = 50, unique = true)
 	private String userEmail;
 	
 	@Enumerated(EnumType.STRING)
