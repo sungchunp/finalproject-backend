@@ -27,7 +27,7 @@ public class FreeBoardService {
 	}
 	
 	public List<FreeBoard> getFreeBoardList() {
-		return freeBoardRepository.findAllByOrderByIdDesc();
+		return freeBoardRepository.findAllByOrderByFbNoDesc();
 	}
 	
 	public FreeBoard getFreeBoard(Integer fbno) {
