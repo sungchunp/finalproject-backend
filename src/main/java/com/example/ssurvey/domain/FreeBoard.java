@@ -1,6 +1,8 @@
 package com.example.ssurvey.domain;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,9 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -39,8 +44,9 @@ public class FreeBoard {
 	@Column(length = 100)
 	private String fbFile;
 	
-	@CreationTimestamp
-	private Timestamp fbCreateBoard;
+	@CreatedDate
+	@Column(nullable = false, updatable = false)
+	private String fbCreateBoard;
 	
 	@Column(length = 10)
 	private int fbViews;
@@ -57,4 +63,10 @@ public class FreeBoard {
 	
 	@Column(length = 50)
 	private String fbTitle;
+	
+	 @PrePersist
+	    protected void onCreate() {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        fbCreateBoard = dateFormat.format(new Date());
+	    }
 }

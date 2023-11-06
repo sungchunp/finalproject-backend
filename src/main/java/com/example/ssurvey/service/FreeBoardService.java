@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.ssurvey.domain.FreeBoard;
@@ -26,16 +28,24 @@ public class FreeBoardService {
 		
 	}
 	
-	public List<FreeBoard> getFreeBoardList() {
-		return freeBoardRepository.findAllByOrderByFbNoDesc();
+	 public Page<FreeBoard> getFreeBoardList(Pageable pageable) {
+	    return freeBoardRepository.findAll(pageable);
 	}
 	
+	 public Page<FreeBoard> getFreeBoardList(Pageable pageable, String search) {
+		 return freeBoardRepository.findByFbTitleContainingIgnoreCase(pageable, search);
+	 }
+	 
+	 
 	public FreeBoard getFreeBoard(Integer fbno) {
-		return freeBoardRepository.findById(fbno).get();
+		return freeBoardRepository.findByFbNo(fbno);
 	}
 	
+	@Transactional
 	public void deleteBoard(Integer fbno) {
-		freeBoardRepository.deleteById(fbno);
+		freeBoardRepository.deleteByFbNo(fbno);
 	}
+	
+	
 }
 
