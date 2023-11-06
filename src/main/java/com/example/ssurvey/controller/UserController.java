@@ -3,7 +3,6 @@ package com.example.ssurvey.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ssurvey.domain.LoginUser;
 import com.example.ssurvey.domain.User;
-import com.example.ssurvey.jwt.JwtService;
-import com.example.ssurvey.repository.UserRepository;
 import com.example.ssurvey.service.UserService;
 
 @RestController
@@ -33,9 +30,6 @@ public class UserController {
 	
 	@PostMapping("/login")							// ↓ domain에 만들어둔 로그인 유저 아이디, 비번 객체
 	public ResponseEntity<?> login (@RequestBody LoginUser loginUser){
-		
-		System.out.println(loginUser.getUsername());
-		System.out.println(loginUser.getPassword());
 		
 		return userService.getResponseEntity(loginUser.getUsername(), loginUser.getPassword());
 		
