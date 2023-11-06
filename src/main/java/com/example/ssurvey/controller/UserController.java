@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.ssurvey.domain.LoginUser;
 import com.example.ssurvey.domain.User;
 import com.example.ssurvey.jwt.JwtService;
+import com.example.ssurvey.repository.UserRepository;
 import com.example.ssurvey.service.UserService;
 
 @RestController
@@ -18,8 +21,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;	// 서비스 의존성주입으로 받아옴
-	
-	
 	
 	
 	@PostMapping("/join")
@@ -38,5 +39,18 @@ public class UserController {
 		
 		return userService.getResponseEntity(loginUser.getUsername(), loginUser.getPassword());
 		
+	}
+	
+	
+	@GetMapping("/userInfo")
+	public ResponseEntity<?> userInfo(Authentication authentication){	// 인증객체를 메서드로 받기 jwtfilter가 인증객체를 username으로 만들어 뒀기 때문에 사용할 수 있음
+		
+		
+		String username = authentication.getName();	// 로그인 유저이름 뽑고
+		User user= userService.getUserInfo(username);	// 이름이 일치하는 유저ㅗ 정보가져옴
+		
+		 System.out.println(authentication.getName()); // 로그인 했을때 콘솔에 이름 잘 나오는지 확인
+		
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 }

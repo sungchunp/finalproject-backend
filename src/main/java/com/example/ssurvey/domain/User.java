@@ -26,9 +26,6 @@ import lombok.Data;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "User_SEQ_GENERATOR")
-	private Integer userNo;
-	
 	@Column(nullable = false, length = 100, unique = true)	// userName에서 username으로 변경, length 50 ->100으로 변경
 	private String username;	//얘가 아이디(이메일)값임 (소문자로 해야함)
 	

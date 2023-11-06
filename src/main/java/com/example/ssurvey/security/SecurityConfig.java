@@ -41,12 +41,13 @@ public class SecurityConfig {
 		
 		http.authorizeHttpRequests()
 			.antMatchers(HttpMethod.POST, "/login", "/join", "/oauth/**").permitAll() //권한이 없는 사람(로그인 안한 사람들)들이 요청할 수 있는 허용 범위
-			.anyRequest().authenticated();
-//			.and()
-//			.exceptionHandling()	// 예외발생했을때 잡아줄 핸들링
-//			.authenticationEntryPoint(authEntryPoint)
-//			.and()
-//			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);	// 토큰 분해해서 사용자 정보 뽑아내고, 인증객체 만드는 메서드 호출 (유저네임만 리턴해주는 인증객체임)
+			.antMatchers(HttpMethod.GET, "/").permitAll()	// [추가] 이거 안해주면 홈에서 유저정보를 못받아옴ㅠㅠ
+			.anyRequest().authenticated()
+			.and()
+			.exceptionHandling()	// 예외발생했을때 잡아줄 핸들링
+			.authenticationEntryPoint(authEntryPoint)
+			.and()
+			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);	// 토큰 분해해서 사용자 정보 뽑아내고, 인증객체 만드는 메서드 호출 (유저네임만 리턴해주는 인증객체임)
 		
 		return http.build();
 		

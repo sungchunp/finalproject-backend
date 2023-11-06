@@ -35,8 +35,8 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	// 이메일값 보내주면 유저정보 받아주는 메서드
-	public User usernameCheck (String username) {
+	// 유저정보 받아주는 메서드
+	public User getUserInfo (String username) {
 		User loginUserInfo = userRepository.findByUsername(username).get();		
 		return loginUserInfo;
 	}
@@ -44,32 +44,19 @@ public class UserService {
 	
 	public ResponseEntity<?> getResponseEntity (String username, String password) {
 		
-		
-    	UsernamePasswordAuthenticationToken upaToken = 
+		UsernamePasswordAuthenticationToken upaToken =
 				new UsernamePasswordAuthenticationToken(username, password);
-		System.out.println(upaToken);
-		//시큐리티.core 임폴트하기
-		// 예외발생도 여기서됨 (값이 없으면, 그냥 null로 처리됨)
-		// auth  : 인증객체 (안에 들어 있는 값이 로그인 성공한 사람 정보)
-		Authentication auth = null;	// 보내준 정보를 토대로 유저서비스 작동되면서 비교할거 비교하고 끝나면 인증객체가 auth에 들어감
 		
-		try {
-			auth = authenticationManager.authenticate(upaToken);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-				
-		System.out.println(auth);
-		String jwt = jwtService.getToken(auth.getName()); // jwt는 인증 성공된 사용자의 정보가 담겨 있는 최종 토큰
-		System.out.println(jwt);
+		Authentication auth = authenticationManager.authenticate(upaToken);
+		
+		String jwt = jwtService.getToken(auth.getName());
+		
+		
 		return ResponseEntity.ok()
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt) // Bearer 뒤에 한칸 띄우기
-				.header(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Authorization")
-				.build();	
-	        
-	    
-
-	}
+					.header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
+					.header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
+					.build();
+		}
 	
 	
 	
