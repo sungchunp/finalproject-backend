@@ -8,4 +8,6 @@ import com.example.ssurvey.domain.FreeBoardReply;
 @Repository
 public interface FreeBoardReplyRepository extends JpaRepository<FreeBoardReply, Integer> {
 
+	
+	
 }

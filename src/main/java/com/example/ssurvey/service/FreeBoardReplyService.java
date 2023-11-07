@@ -15,4 +15,8 @@ public class FreeBoardReplyService {
 	public void insertReply(FreeBoardReply freeBoardReply) {
 		freeBoardReplyRepository.save(freeBoardReply);
 	}
+	
+	public FreeBoardReply getReplyList(Integer fbno) {
+		
+	}
 }
