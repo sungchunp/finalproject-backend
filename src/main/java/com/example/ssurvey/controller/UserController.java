@@ -31,6 +31,8 @@ public class UserController {
 	@PostMapping("/login")							// ↓ domain에 만들어둔 로그인 유저 아이디, 비번 객체
 	public ResponseEntity<?> login (@RequestBody LoginUser loginUser){
 		
+		System.out.println(loginUser);
+		
 		return userService.getResponseEntity(loginUser.getUsername(), loginUser.getPassword());
 		
 	}

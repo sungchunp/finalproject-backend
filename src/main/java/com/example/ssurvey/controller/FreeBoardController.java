@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,4 +74,20 @@ public class FreeBoardController {
 		
 		return new ResponseEntity<>("게시글 삭제 완료", HttpStatus.OK);
 	}
+	
+	@PutMapping("/fboard/{fbno}")
+	public ResponseEntity<?> updateBoard(@PathVariable Integer fbno, @Valid @RequestBody FreeBoardDTO freeBoardDTO, BindingResult bindingResult) {
+		
+		freeBoardService.updateBoard(fbno, freeBoardDTO);
+		
+		return new ResponseEntity<>("게시글 수정 완료", HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/fboard/view/{fbno}")
+	public void increaseViews(@PathVariable Integer fbno) {
+		
+		freeBoardService.increaseViews(fbno);
+	}
+	
 }
