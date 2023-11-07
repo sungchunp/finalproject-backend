@@ -42,8 +42,7 @@ public class UserController {
 		
 		String username = authentication.getName();	// 로그인 유저이름 뽑고
 		User user= userService.getUserInfo(username);	// 이름이 일치하는 유저ㅗ 정보가져옴
-		
-		 System.out.println(authentication.getName()); // 로그인 했을때 콘솔에 이름 잘 나오는지 확인
+
 		
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
