@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class LoginUser {
 
-	private String userEmail;
-	private String userPassword;
+	private String username;
+	private String password;
 }
