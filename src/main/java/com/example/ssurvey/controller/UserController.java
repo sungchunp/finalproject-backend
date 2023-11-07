@@ -1,5 +1,7 @@
 package com.example.ssurvey.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,4 +48,33 @@ public class UserController {
 		
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("/oauth/google")
+	public ResponseEntity<?> googleLogin(@RequestBody Map<String,String> accessToken){
+		User user = userService.googleLogin(accessToken.get("access_token")); //엑세스 토큰이라는 이름의 키를 가진 것의 벨류를 뽑아내는 코드
+		
+		System.out.println(user);
+		
+		User findUser = userService.getUserInfo(user.getUsername());	// 기존 디비에 방금 로그인한 사람이 있는지 물어보고 없으면 신규회원이기 떄문에 DB에 저장 (저장은 아래 if문)
+		
+		
+		System.out.println("findUser★★★★★★");
+		
+		
+		if(findUser==null) {
+			userService.join(user);	// 여기서 저장이 되는데....저장 안시키고 ?
+		}
+		
+		System.out.println("join★★★★★★");
+//		return new ResponseEntity<>("추가정보를 입력해주세요",HttpStatus.OK);
+		return userService.getResponseEntity(user.getUsername(), user.getPassword());
+	}
+	
+	
+	
+	
+	
+	
+	
 }

@@ -58,5 +58,8 @@ public class User {
 	
 	@Column(length = 50)
 	private Integer surveyNo;
+	
+	@Column(length = 50)
+	private String UserType; // [추가] 유저 로그인 타입이 일반인지, 구글인지, 카톡인지 저장하는거 
 }
 
