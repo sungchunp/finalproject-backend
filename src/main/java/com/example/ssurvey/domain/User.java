@@ -29,14 +29,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "User_SEQ_GENERATOR")
 	private Integer userNo;
 	
+	@Column(nullable = false, length = 100, unique = true)	// userName에서 username으로 변경, length 50 ->100으로 변경
+	private String username;	//얘가 아이디(이메일)값임 (소문자로 해야함)
+	
+	@Column(nullable = false, length = 150)	// userPassword에서 password으로 변경, length 50 -> 150으로 변경
+	private String password;	
+	
 	@Column(nullable = false, length = 100)
-	private String userName;
-	
-	@Column(nullable = false, length = 150)	// 50 -> 150으로 바꿈 
-	private String userPassword;
-	
-	@Column(nullable = false, length = 50, unique = true)
-	private String userEmail;
+	private String userRname;	// 이게 유저 닉네임 혹은 이름 들어가는 부분
 	
 	@Enumerated(EnumType.STRING)
 	private RoleType userRoletype;

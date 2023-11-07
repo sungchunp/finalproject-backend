@@ -10,7 +10,6 @@ import com.example.ssurvey.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String>{
 
-	User findByUserEmail(String userEmail);	
-	
-//	String fundByUserPassword(String userPassword);
+	Optional<User> findByUsername(String username);
+
 }
