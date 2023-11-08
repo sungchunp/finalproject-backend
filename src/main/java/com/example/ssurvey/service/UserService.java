@@ -42,7 +42,10 @@ public class UserService {
 	public void join (User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setUserRoletype(RoleType.USER);
+		
+		if(user.getUserType()== null) {
 		user.setUserType("email");
+		}
 		
 		userRepository.save(user);
 	}
@@ -59,11 +62,10 @@ public class UserService {
 	public ResponseEntity<?> getResponseEntity (String username, String password) {
 		
 		UsernamePasswordAuthenticationToken upaToken =
-				new UsernamePasswordAuthenticationToken(username, password);
+				new UsernamePasswordAuthenticationToken(username, password); // 사용자가 입력한 아이디, 비번값 
 		
-		
-		Authentication auth = authenticationManager.authenticate(upaToken);
-		
+		// 일치하면 auth에 인증객체가 담기고, 아니면 오류처리됨
+		Authentication auth = authenticationManager.authenticate(upaToken);	// DB에 저장된 아이디 비번값과 위에 만들 upaToken(입력 아이디, 비번 값) 비교		
 		String jwt = jwtService.getToken(auth.getName());
 		
 		
