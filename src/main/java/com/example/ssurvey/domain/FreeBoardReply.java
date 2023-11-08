@@ -1,6 +1,5 @@
 package com.example.ssurvey.domain;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,8 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -36,6 +36,7 @@ public class FreeBoardReply {
 	@JoinColumn(name = "userNo")
 	private User user;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)	
 	@JoinColumn(name = "fbNo")
 	private FreeBoard freeBoard;

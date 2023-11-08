@@ -1,6 +1,5 @@
 package com.example.ssurvey.domain;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,9 +18,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -57,8 +56,9 @@ public class FreeBoard {
 	@Column(length = 10)
 	private int fbReplyCnt;
 	
-	@OneToMany(mappedBy = "freeBoard",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@OrderBy("fbrCreateDate desc") //아이디를 기준으로 내림차순
+	@JsonManagedReference
+	@OneToMany(mappedBy = "freeBoard",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OrderBy("fbrNo desc")
 	private List<FreeBoardReply> fbReplyList;
 	
 	@Column(length = 50)

@@ -1,8 +1,11 @@
 package com.example.ssurvey.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.ssurvey.domain.FreeBoard;
 import com.example.ssurvey.domain.FreeBoardReply;
 import com.example.ssurvey.repository.FreeBoardReplyRepository;
 
@@ -12,11 +15,11 @@ public class FreeBoardReplyService {
 	@Autowired
 	private FreeBoardReplyRepository freeBoardReplyRepository;
 	
-	public void insertReply(FreeBoardReply freeBoardReply) {
-		freeBoardReplyRepository.save(freeBoardReply);
-	}
+	public FreeBoardReply saveReply(FreeBoardReply freeBoardReply) {
+        return freeBoardReplyRepository.save(freeBoardReply);
+    }
 	
-	public FreeBoardReply getReplyList(Integer fbno) {
-		
+	public Page<FreeBoardReply> getRepliesByFreeBoardFbNo(Pageable pageable, FreeBoard freeBoard) {
+	    return freeBoardReplyRepository.findByFreeBoard(pageable, freeBoard);
 	}
 }

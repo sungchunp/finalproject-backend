@@ -1,14 +1,12 @@
 package com.example.ssurvey.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ssurvey.domain.FreeBoard;
 import com.example.ssurvey.dto.FreeBoardDTO;
 import com.example.ssurvey.service.FreeBoardService;
-import org.springframework.data.domain.Sort;
 
 @RestController
 public class FreeBoardController {
@@ -49,15 +45,23 @@ public class FreeBoardController {
 	}
 	
 	@GetMapping("/fboard")
-	public Page<FreeBoard> getFreeBoardList(@PageableDefault(sort = "fbNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "search") String search) {
+	public ResponseEntity<Page<FreeBoard>> getFreeBoardList(@PageableDefault(sort = "fbNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "search", required = false)  String search) {
 		
-		if(search == null)
-			return freeBoardService.getFreeBoardList(pageable);
-        else
-           return freeBoardService.getFreeBoardList(pageable, search);
-   
+		System.out.println(search);
+		
+		if (search != null && !search.isEmpty()) {
+			
+			Page<FreeBoard> boardSPage = freeBoardService.getFreeSearchBoardList(pageable, search);
+			
+	        return new ResponseEntity<>(boardSPage, HttpStatus.OK);
+	        
+	    } else {
+	    	
+	    	Page<FreeBoard> boardPage = freeBoardService.getFreeBoardList(pageable);
+	    	
+	        return new ResponseEntity<>(boardPage, HttpStatus.OK);
+	    }
 	}
-	
 	
 	@GetMapping("/fboard/{fbno}")
 	public ResponseEntity<?> getBoard(@PathVariable Integer fbno) {

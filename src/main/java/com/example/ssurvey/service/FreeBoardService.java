@@ -1,7 +1,5 @@
 package com.example.ssurvey.service;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ public class FreeBoardService {
 	    return freeBoardRepository.findAll(pageable);
 	}
 	
-	 public Page<FreeBoard> getFreeBoardList(Pageable pageable, String search) {
+	 public Page<FreeBoard> getFreeSearchBoardList(Pageable pageable, String search) {
 		 return freeBoardRepository.findByFbTitleContainingIgnoreCase(pageable, search);
 	 }
 	 
