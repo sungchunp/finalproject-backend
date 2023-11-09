@@ -49,7 +49,7 @@ public class FreeBoardService {
 		freeBoardRepository.deleteByFbNo(fbno);
 	}
 	
-	
+	@Transactional
 	public void updateBoard(Integer fbno, FreeBoardDTO freeBoardDTO) {
 		
 		FreeBoard oriFreeBoard = getFreeBoard(fbno);
@@ -60,6 +60,7 @@ public class FreeBoardService {
 		freeBoardRepository.save(oriFreeBoard);
 	}
 	
+	@Transactional
 	public void increaseViews(Integer fbno) {
 		
 		FreeBoard freeBoard = getFreeBoard(fbno);
