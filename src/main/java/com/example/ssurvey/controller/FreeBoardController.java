@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ssurvey.domain.FreeBoard;
+import com.example.ssurvey.domain.FreeBoardReply;
 import com.example.ssurvey.dto.FreeBoardDTO;
+import com.example.ssurvey.dto.FreeBoardDetailDTO;
 import com.example.ssurvey.service.FreeBoardService;
 
 @RestController
@@ -94,4 +96,25 @@ public class FreeBoardController {
 		freeBoardService.increaseViews(fbno);
 	}
 	
+	@GetMapping("/fboarddetail/{fbno}")
+	public ResponseEntity<?> getBoardWithPaging(@PathVariable Integer fbno, @PageableDefault(sort = "fbrNo", direction = Sort.Direction.ASC) Pageable pageable) {
+		try {
+		// 게시글 상세 정보 가져오기
+		FreeBoard freeBoard = freeBoardService.getFreeBoard(fbno);
+		
+		// 페이징 처리된 댓글 목록 가져오기
+		Page<FreeBoardReply> replyPage = freeBoardService.getFreeBoardReplies(fbno, pageable);
+		
+		// 게시글 정보와 댓글 목록을 DTO에 매핑
+		FreeBoardDetailDTO responseDTO = new FreeBoardDetailDTO();
+		responseDTO.setFreeBoard(freeBoard);
+		responseDTO.setReplyList(replyPage.getContent());
+		responseDTO.setTotalPages(replyPage.getTotalPages());
+		
+		return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+		} catch (Exception e) {
+		return new ResponseEntity<>("게시글 및 댓글 정보를 가져오는 중에 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	
+	}
 }

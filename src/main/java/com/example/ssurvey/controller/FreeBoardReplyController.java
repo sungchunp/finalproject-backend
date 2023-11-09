@@ -31,10 +31,5 @@ public class FreeBoardReplyController {
         return new ResponseEntity<>(savedReply, HttpStatus.CREATED);
     }
 	
-	@GetMapping("/replies/{fbno}")
-	public ResponseEntity<Page<FreeBoardReply>> getRepliesByFreeBoardId(@PageableDefault(sort = "fbrNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestBody FreeBoard freeBoard) {
-	   Page<FreeBoardReply> replyPage = freeBoardReplyService.getRepliesByFreeBoardFbNo(pageable, freeBoard);
-	   return new ResponseEntity<>(replyPage, HttpStatus.OK);
-	}
 	
 }

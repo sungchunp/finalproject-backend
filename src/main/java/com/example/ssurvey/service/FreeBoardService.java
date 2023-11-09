@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.ssurvey.domain.FreeBoard;
+import com.example.ssurvey.domain.FreeBoardReply;
 import com.example.ssurvey.dto.FreeBoardDTO;
+import com.example.ssurvey.repository.FreeBoardReplyRepository;
 import com.example.ssurvey.repository.FreeBoardRepository;
 
 @Service
@@ -16,6 +18,8 @@ public class FreeBoardService {
 
 	@Autowired
 	private FreeBoardRepository freeBoardRepository;
+	@Autowired
+	private FreeBoardReplyRepository freeBoardReplyRepository;
 	
 	@Transactional
 	public void insertBoard(FreeBoard freeBoard) {
@@ -62,7 +66,10 @@ public class FreeBoardService {
 		freeBoard.setFbViews(freeBoard.getFbViews() + 1);
 		
 		freeBoardRepository.save(freeBoard);
-		
+	}
+	
+	public Page<FreeBoardReply> getFreeBoardReplies(Integer fbno, Pageable pageable) {
+	    return freeBoardReplyRepository.findByFreeBoardFbNo(fbno, pageable);
 	}
 }
 

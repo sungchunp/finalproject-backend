@@ -11,6 +11,6 @@ import com.example.ssurvey.domain.FreeBoardReply;
 @Repository
 public interface FreeBoardReplyRepository extends JpaRepository<FreeBoardReply, Integer> {
 
-	Page<FreeBoardReply> findByFreeBoard(Pageable pageable, FreeBoard freeBoard);
+	Page<FreeBoardReply> findByFreeBoardFbNo(Integer fbno, Pageable pageable);
 	
 }

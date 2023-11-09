@@ -19,7 +19,4 @@ public class FreeBoardReplyService {
         return freeBoardReplyRepository.save(freeBoardReply);
     }
 	
-	public Page<FreeBoardReply> getRepliesByFreeBoardFbNo(Pageable pageable, FreeBoard freeBoard) {
-	    return freeBoardReplyRepository.findByFreeBoard(pageable, freeBoard);
-	}
 }
