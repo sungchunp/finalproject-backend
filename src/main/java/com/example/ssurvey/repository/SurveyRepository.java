@@ -10,6 +10,10 @@ import com.example.ssurvey.domain.Survey;
 @Repository
 public interface SurveyRepository extends JpaRepository<Survey, Integer> {
 	
-	public List<Survey> findAllByOrderBySurveyNoDesc();
+	public List<Survey> findAll();
+
+//	public List<Survey> findBySurveyCategory(String category);
+	
+	
 	
 }

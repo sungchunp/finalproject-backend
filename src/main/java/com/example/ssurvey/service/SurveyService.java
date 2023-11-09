@@ -10,28 +10,15 @@ import java.util.List;
 @Service
 public class SurveyService {
 
-    private final SurveyRepository surveyRepository;
-
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository) {
-        this.surveyRepository = surveyRepository;
-    }
-
+    private SurveyRepository surveyRepository;
+    
     public List<Survey> getAllSurveys() {
         return surveyRepository.findAll();
     }
-
-    public Survey getSurveyById(Integer surveyNo) {
-        return surveyRepository.findById(surveyNo).orElse(null);
-    }
-
-    public Survey createSurvey(Survey survey) {
-        return surveyRepository.save(survey);
-    }
-
-    public void deleteSurvey(Integer surveyNo) {
-        surveyRepository.deleteById(surveyNo);
-    }
     
+//    public List<Survey> getSurveysByCategory(String category) {
+//        return surveyRepository.findBySurveyCategory(category);
+//    }
     
 }
