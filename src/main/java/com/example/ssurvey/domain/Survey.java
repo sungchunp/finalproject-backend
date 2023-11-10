@@ -61,7 +61,7 @@ public class Survey {
 	private List<SurveyReply> surveyReplyList;
 	
 	@Column(length = 50)
-	private String surveyTitle;
+	private String sTitle;
 }
 
 

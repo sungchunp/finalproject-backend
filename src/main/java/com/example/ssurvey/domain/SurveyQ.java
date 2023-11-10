@@ -1,6 +1,9 @@
 package com.example.ssurvey.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,10 +35,15 @@ public class SurveyQ {
 	private String sqQuestion;
 	
 	@Column(length = 10)
-	private int sqType;
+	private String sqType;	// 타입 int ->  String으로 변경
 	
 	@Column(length = 100)
 	private String sqFile;
 
+//	@Column(length = 100)
+//	private int id;
 	
+//	@ElementCollection
+//	@Column(name = "option", length = 1000)
+//	private List<String> option; // 값 들어오는거 확인하고 문제 있을 시 수정 필요
 }
