@@ -27,9 +27,8 @@ public class SurveyQ {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SurveyQ_SEQ_GENERATOR")
 	private Integer sqNo;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "surveyNo")
-	private Survey survey;
+	@Column(length = 1000)
+	private Integer surveyNo;
 	
 	@Column(length = 1000)
 	private String sqQuestion;
@@ -40,10 +39,12 @@ public class SurveyQ {
 	@Column(length = 100)
 	private String sqFile;
 
-//	@Column(length = 100)
-//	private int id;
+	@Column(length = 100)
+	private int id;
 	
-//	@ElementCollection
-//	@Column(name = "option", length = 1000)
-//	private List<String> option; // 값 들어오는거 확인하고 문제 있을 시 수정 필요
+	@ElementCollection
+	@Column(name = "options", length = 1000)
+	private List<String> option; // 값 들어오는거 확인하고 문제 있을 시 수정 필요
+	
+	
 }
