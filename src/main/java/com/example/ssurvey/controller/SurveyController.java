@@ -35,6 +35,18 @@ public class SurveyController {
 	    List<Survey> surveys = surveyService.getAllSurveys();
 	    return new ResponseEntity<>(surveys, HttpStatus.OK);
 	}
+	
+	@GetMapping("/surveyNo")
+	public ResponseEntity<Survey> getSurveyById(@PathVariable Integer surveyNo) {
+	    Survey survey = surveyService.getSurveyById(surveyNo);
+
+	    if (survey != null) {
+	        return new ResponseEntity<>(survey, HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
+
 //	
 //	@GetMapping("/category")
 //	public ResponseEntity<List<Survey>> getSurveysByCategory(@RequestParam(name = "category", required = false) String category) {

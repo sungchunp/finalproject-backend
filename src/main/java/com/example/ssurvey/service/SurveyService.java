@@ -6,6 +6,7 @@ import com.example.ssurvey.domain.Survey;
 import com.example.ssurvey.repository.SurveyRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SurveyService {
@@ -15,6 +16,11 @@ public class SurveyService {
     
     public List<Survey> getAllSurveys() {
         return surveyRepository.findAll();
+    }
+    
+    public Survey getSurveyById(Integer surveyNo) {
+        Optional<Survey> optionalSurvey = surveyRepository.findById(surveyNo);
+        return optionalSurvey.orElse(null);
     }
     
 //    public List<Survey> getSurveysByCategory(String category) {
