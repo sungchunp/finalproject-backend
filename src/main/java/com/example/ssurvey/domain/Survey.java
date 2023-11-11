@@ -3,9 +3,11 @@ package com.example.ssurvey.domain;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +35,9 @@ public class Survey {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Survey_SEQ_GENERATOR")
 	private Integer surveyNo;
 	
+	@Column(length = 50)
+	private String surTitle;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userNo")
 	private User user;
@@ -55,9 +60,18 @@ public class Survey {
 	
 	@Column(length = 200)
 	private int surveyCount;
+<<<<<<< HEAD
+=======
+
+	@OneToMany(mappedBy = "survey",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+//	@OrderBy("fbrCreateDate desc") //댓글 작성 일을 기준으로 내림차순
+	private List<SurveyReply> surveyReplyList;
+>>>>>>> df3527166da03aceebff902fd79c989299142f51
 	
-	@Column(length = 50)
-	private String surveyTitle;
+//	@ElementCollection
+//	@Column(name = "sssurveyQ")
+//	@OneToMany(mappedBy = "survey",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+//	private Set<SurveyQ> surveyQ;
 }
 
 
