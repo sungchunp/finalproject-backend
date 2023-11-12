@@ -57,7 +57,7 @@ public class FreeBoard {
 	private int fbReplyCnt;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "freeBoard",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "freeBoard",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("fbrNo desc")
 	private List<FreeBoardReply> fbReplyList;
 	
