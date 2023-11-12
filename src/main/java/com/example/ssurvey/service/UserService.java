@@ -34,6 +34,19 @@ public class UserService {
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	
+//	// 생성자
+//    public UserService(
+//            PasswordEncoder passwordEncoder,
+//            UserRepository userRepository,
+//            JwtService jwtService,
+//            AuthenticationManager authenticationManager
+//    ) {
+//        this.passwordEncoder = passwordEncoder;
+//        this.userRepository = userRepository;
+//        this.jwtService = jwtService;
+//        this.authenticationManager = authenticationManager;
+//    }
+	
 	@Value("${google.default.password}")
 	private String googlePassword;
 	

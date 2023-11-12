@@ -60,13 +60,12 @@ public class Survey {
 	
 	@Column(length = 200)
 	private int surveyCount;
-<<<<<<< HEAD
-=======
+
 
 	@OneToMany(mappedBy = "survey",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 //	@OrderBy("fbrCreateDate desc") //댓글 작성 일을 기준으로 내림차순
 	private List<SurveyReply> surveyReplyList;
->>>>>>> df3527166da03aceebff902fd79c989299142f51
+
 	
 //	@ElementCollection
 //	@Column(name = "sssurveyQ")

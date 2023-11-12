@@ -81,9 +81,6 @@ public class UserController {
 		return userService.getResponseEntity(user.getUsername(), userPw);
 	}
 	
-	
-	
-	
 	@PostMapping("/oauth/join")
 	public ResponseEntity<?> SocialJoinInfo (@RequestBody User user){
 		
@@ -100,14 +97,6 @@ public class UserController {
 		System.out.println("★★★");
 		return userService.getResponseEntity(user.getUsername(), userPw); // 로그인 처리
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
 
+
 @Entity
 @Data
 @SequenceGenerator(
