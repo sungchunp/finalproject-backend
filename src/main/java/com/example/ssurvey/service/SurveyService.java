@@ -48,15 +48,15 @@ public class SurveyService {
         }
 	}
 
-	public Survey getSurveyById(Integer surveyNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Survey> getAllSurveys() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	public Survey getSurveyById(Integer surveyNo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	public List<Survey> getAllSurveys() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }
 
 
