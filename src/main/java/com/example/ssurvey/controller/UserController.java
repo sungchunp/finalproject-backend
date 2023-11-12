@@ -95,25 +95,45 @@ public class UserController {
 	
 	
 	
-	
+	// 소셜 회원가입 할때 추가 정보 입력 받고 DB에 저장해서 회원가입 절차 완료시킴
 	@PostMapping("/oauth/join")
 	public ResponseEntity<?> SocialJoinInfo (@RequestBody User user){
 		
-		System.out.println("★ : " + user.getUsername());
 		User findUser = userService.getUserInfo(user.getUsername());	
 		String userPw = user.getPassword();
 		
-		System.out.println("★★");
 		
 		if(findUser==null) {	// null 값이면 회원이 아니기 때문에 if문이 발동됨		
 			userService.join(user);	// DB에 저장
 		}
 		
-		System.out.println("★★★");
 		return userService.getResponseEntity(user.getUsername(), userPw); // 로그인 처리
 	}
 	
 	
+	
+	@PostMapping("/oauth/kakao")
+	public ResponseEntity<?> kakaoLogin(@RequestBody Map<String, String> kakaoCode){
+		
+		
+		String code = kakaoCode.get("code");	//  카카오 로그인 인증코드 추출
+		
+		String accessToken = userService.getKakaoAccessToken(code);	// 토큰 객체 추출 (나중에 토근만 따로 추출해야함)
+		
+		User user = userService.kakaoLogin(accessToken);
+		String userPw = user.getPassword();
+
+
+		User findUser = userService.getUserInfo(user.getUsername());	
+		
+		// 유저 이름과 DB에 저장된 유저이름이 일치하지 않다면 신규 회원임으로 DB에 저장
+		if(findUser==null) {
+			return new ResponseEntity<>(user,HttpStatus.OK);
+		}
+		
+		
+		return userService.getResponseEntity(user.getUsername(), userPw);
+	}
 	
 	
 	
