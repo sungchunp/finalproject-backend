@@ -40,7 +40,7 @@ public class SecurityConfig {
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);	// 토큰을 통해서 로그인 인증처리를 할거기 때문에 세션 사용안한다고 설정함
 		
 		http.authorizeHttpRequests()
-			.antMatchers(HttpMethod.POST, "/login", "/join", "/oauth/**").permitAll() //권한이 없는 사람(로그인 안한 사람들)들이 요청할 수 있는 허용 범위
+			.antMatchers(HttpMethod.POST, "/login", "/join/**", "/oauth/**").permitAll() //권한이 없는 사람(로그인 안한 사람들)들이 요청할 수 있는 허용 범위
 			.antMatchers(HttpMethod.GET, "/fboard").permitAll()	// [추가] 이거 안해주면 홈에서 유저정보를 못받아옴ㅠㅠ
 			.anyRequest().authenticated()
 			.and()

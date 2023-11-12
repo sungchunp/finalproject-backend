@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,17 @@ public class UserController {
 	@Autowired
 	private UserService userService;	// 서비스 의존성주입으로 받아옴
 	
+	@PostMapping("/join/{username}") // 이메일 중복 체크 
+	public ResponseEntity<?> emailCheck (@PathVariable String username){
+		User user =  userService.getUserInfo(username);
+
+		
+		if(user == null) {
+			return new ResponseEntity<>("none" , HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(user.getUserType(), HttpStatus.OK);
+		}
+	}
 	
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody User user){
