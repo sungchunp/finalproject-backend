@@ -37,7 +37,7 @@ public class FreeBoardReply {
 	private User user;
 	
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER)	
+	@ManyToOne(fetch = FetchType.LAZY)	
 	@JoinColumn(name = "fbNo")
 	private FreeBoard freeBoard;
 	
@@ -54,5 +54,11 @@ public class FreeBoardReply {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         fbrCreateDate = dateFormat.format(new Date());
     }
+
+
+	public FreeBoardReply orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
