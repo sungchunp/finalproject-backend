@@ -12,21 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ssurvey.domain.Survey;
+import com.example.ssurvey.domain.SurveyA;
 import com.example.ssurvey.domain.SurveyQ;
 import com.example.ssurvey.service.SurveyService;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 @RestController
-//@RequestMapping("/survey")
 public class SurveyController {
 
 	@Autowired
 	private SurveyService surveyService;
 	
-//  //모든 설문 목록을 가져오는 엔드포인트
-//  @GetMapping("/survey")
-//  public List<Survey> getAllSurveys() {
-//      return surveyService.getAllSurveys();
-//  }
   
 	@GetMapping("/survey")
 	public ResponseEntity<List<Survey>> getAllSurveys() {
@@ -34,30 +31,17 @@ public class SurveyController {
 	    return new ResponseEntity<>(surveys, HttpStatus.OK);
 	}
 	
-	 @GetMapping("/{surveyNo}") 
-	    public ResponseEntity<Survey> getSurveyById(@PathVariable Integer surveyNo) {
-	        Survey survey = surveyService.getSurveyById(surveyNo);
-
-	        if (survey != null) {
-	            return new ResponseEntity<>(survey, HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	        }
-	    }
-
-//	
-//	@GetMapping("/category")
-//	public ResponseEntity<List<Survey>> getSurveysByCategory(@RequestParam(name = "category", required = false) String category) {
-//	    List<Survey> surveys;
-//
-//	    if (category != null) {
-//	        surveys = surveyService.getSurveysByCategory(category);
-//	    } else {
-//	        surveys = surveyService.getAllSurveys();
-//	    }
-//
-//	    return new ResponseEntity<>(surveys, HttpStatus.OK);
-//	}
+	
+	@GetMapping("/surveyQ/{surveyNo}")
+	public ResponseEntity<?> getSurveyQ(@PathVariable Integer surveyNo) {
+		
+		List<SurveyQ> surveyQs = surveyService.getSurveyQ(surveyNo);
+		
+		return new ResponseEntity<>(surveyQs, HttpStatus.OK);
+		
+	}
+	 
+	 
 	
 	@PostMapping("/addSurvey")
 	public ResponseEntity<?> addSurvey(@RequestBody List<SurveyQ> surveyQ, String surTitle, String surveyCategory, String username) {
@@ -68,6 +52,15 @@ public class SurveyController {
 		
 
 		return new ResponseEntity<>("설문 등록 완료", HttpStatus.OK);
+	}
+	
+	@PostMapping("/surveyA")
+	public ResponseEntity<?> addAnswer(@RequestBody List<SurveyA> surveyA) {
+		
+		surveyService.addAnswer(surveyA);
+		
+		return new ResponseEntity<>("설문 답변 완료", HttpStatus.OK);
+		
 	}
 	
 }

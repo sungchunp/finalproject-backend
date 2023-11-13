@@ -3,8 +3,10 @@ package com.example.ssurvey.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.ssurvey.domain.Survey;
+import com.example.ssurvey.domain.SurveyA;
 import com.example.ssurvey.domain.SurveyQ;
 import com.example.ssurvey.domain.User;
+import com.example.ssurvey.repository.SurveyARepository;
 import com.example.ssurvey.repository.SurveyQRepository;
 import com.example.ssurvey.repository.SurveyRepository;
 import com.example.ssurvey.repository.UserRepository;
@@ -23,6 +25,9 @@ public class SurveyService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private SurveyARepository surveyARepository;
 	
 	public void addSurvey(String surTitle, String surveyCategory, String username) {
 		
@@ -49,14 +54,23 @@ public class SurveyService {
 	}
 
 
-	public Survey getSurveyById(Integer surveyNo) {
-		 return surveyRepository.findById(surveyNo).orElse(null);
-	}
+	public List<SurveyQ> getSurveyQ(Integer surveyNo) {
+			return surveyQRepository.findAllBySurveyNoOrderBySqNoAsc(surveyNo);
+		}
 
 	public List<Survey> getAllSurveys() {
-		return surveyRepository.findAll();
-	}
+			return surveyRepository.findAll();
+		}
 
+	public void addAnswer(List<SurveyA> surveyA) {
+//		User userInfo = (User)userRepository.findByUsername(username).get();
+		
+		for(SurveyA oneSurveyA : surveyA) {
+//			oneSurveyA.setUser(userInfo);
+			surveyARepository.save(oneSurveyA);
+		}
+	}
+	
 }
 
 
