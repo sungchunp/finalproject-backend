@@ -43,7 +43,6 @@ public class FreeBoardController {
 		freeBoardService.insertBoard(freeBoard);
 		
 		return new ResponseEntity<>("게시글 등록 완료", HttpStatus.OK);
-		
 	}
 	
 	@GetMapping("/fboard")

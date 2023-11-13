@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,6 +50,9 @@ public class UserService {
 	
 	@Value("${google.default.password}")
 	private String googlePassword;
+	
+	@Value("${kakao.default.password}")
+	private String kakaoPassword;
 	
 	
 	
@@ -115,6 +119,98 @@ public class UserService {
 		user.setUserRname((String) data.get("name"));
 		user.setPassword(googlePassword);
 		user.setUserType("google");
+		user.setUserRoletype(RoleType.USER);
+		
+		return user;
+		
+	}
+	
+	
+	public String getKakaoAccessToken(String code) {
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 카카오에서 안내된 코드
+		
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+	    body.add("grant_type", "authorization_code");
+	    body.add("client_id", "e6b21a4273796d922a495af28898d205"); // 각자 rest api key
+	    body.add("redirect_uri", "http://localhost:3000/oauth/kakao");
+	    body.add("code", code);
+	    
+	    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body,header);
+	    
+	    RestTemplate restTemplate = new RestTemplate();
+	    
+	    ResponseEntity<String> response = 
+	    		restTemplate.exchange("https://kauth.kakao.com/oauth/token",	// 카카오 문서에서 안내된 대로 적기
+	    								HttpMethod.POST,
+	    								request,
+	    								String.class
+	    							);
+		
+	    String json = response.getBody();	// 여기서 부터는 토큰만 따로 추출하기 위한 코드
+	    
+	    Gson gson = new Gson();
+	    Map<?, ?> data = gson.fromJson(json, Map.class);
+	    
+	    return (String) data.get("access_token");	// 순수 access_Token 문자열만 뽑기
+	}
+	
+	
+	
+	
+	public User kakaoLogin(String accessToken) {
+		HttpHeaders header = new HttpHeaders();
+		header.add("Authorization", "Bearer " + accessToken);	// 카카오 문서 안내대로
+		header.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 카카오 문서 안내대로
+		
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(header);	// 토큰을 통해 정보를 받아올때는 header만 보내주면 된다고 함(카카오 문서 안내)
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ResponseEntity<String> response = 
+				restTemplate.exchange(
+									"https://kapi.kakao.com/v2/user/me",	//카카오 문서	
+									HttpMethod.POST,
+									request,
+									String.class
+									);
+		
+		String json = response.getBody();
+		Gson gson = new Gson();
+		Map<?, ?> data = gson.fromJson(json, Map.class);	//문자열을 키벨류값으로 분류해서 map에 저장함
+		
+		System.out.println("★★★★");
+		
+		String username = (String)((Map<?, ?>)data.get("properties")).get("nickname");	// map안에 키벨류로 저장된 값에서 nickname만 뽑아내기
+		System.out.println(username);
+		
+		String email = (String)((Map<?, ?>) data.get("kakao_account")).get("email");
+		
+		/*
+		  위에 Map 형태의 data 객체 안에는 아래와 같이 들어있음 여기서 원하는걸 경로에 맞게 뽑으면 됨
+		  {
+			"id":3100958514,
+			"connected_at":"2023-10-17T01:20:30Z",
+			"properties":{"nickname":"예원"},
+			"kakao_account":
+					{
+						"profile_nickname_needs_agreement":false,
+						"profile":{"nickname":"예원"},
+						"has_email":true,
+						"email_needs_agreement":false,
+						"is_email_valid":true,
+						"is_email_verified":true,
+						"email":"wwww7708@naver.com"
+					}
+		   }
+	     */
+	
+		User user = new User();
+		user.setUsername(email);
+		user.setUserRname(username);
+		user.setPassword(kakaoPassword);
+		user.setUserType("kakao");
 		user.setUserRoletype(RoleType.USER);
 		
 		return user;
