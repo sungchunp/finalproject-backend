@@ -27,7 +27,7 @@ public class FreeBoardReplyService {
         try {
             FreeBoardReply replyToDelete = freeBoardReplyRepository.findByFbrNo(fbrNo);
             if (replyToDelete != null) {
-                // 댓글 엔터티에서 FreeBoard 참조 제거
+                // 댓글 엔티티에서 FreeBoard 참조 제거
                 replyToDelete.setFreeBoard(null);
                 freeBoardReplyRepository.delete(replyToDelete);
             } else {
