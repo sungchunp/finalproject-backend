@@ -16,7 +16,7 @@ import com.example.ssurvey.domain.SurveyA;
 import com.example.ssurvey.domain.SurveyQ;
 import com.example.ssurvey.service.SurveyService;
 
-import oracle.jdbc.proxy.annotation.Post;
+// import oracle.jdbc.proxy.annotation.Post;
 
 @RestController
 public class SurveyController {
