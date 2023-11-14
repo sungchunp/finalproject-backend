@@ -37,6 +37,20 @@ public class SurveyController {
 		
 		List<SurveyQ> surveyQs = surveyService.getSurveyQ(surveyNo);
 		
+		int index = 0;
+		
+		for(SurveyQ onesurveyQ : surveyQs) {
+			Integer num = onesurveyQ.getSqNo();
+			List<SurveyA> answer = surveyService.aaa(num); 
+			for(SurveyA onea : answer) {
+//				onea.getAnswer();
+				System.out.println("@@@@@" + onea.getAnswer());
+			}
+//			System.out.println("인덱스" + index + " : " +surveyService.aaa(num).get().getAnswer());
+			index++;
+		}
+		
+		
 		return new ResponseEntity<>(surveyQs, HttpStatus.OK);
 		
 	}
@@ -55,9 +69,9 @@ public class SurveyController {
 	}
 	
 	@PostMapping("/surveyA")
-	public ResponseEntity<?> addAnswer(@RequestBody List<SurveyA> surveyA) {
+	public ResponseEntity<?> addAnswer(@RequestBody List<SurveyA> surveyA, String username) {
 		
-		surveyService.addAnswer(surveyA);
+		surveyService.addAnswer(surveyA, username);
 		
 		return new ResponseEntity<>("설문 답변 완료", HttpStatus.OK);
 		

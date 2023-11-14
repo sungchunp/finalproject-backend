@@ -62,13 +62,17 @@ public class SurveyService {
 			return surveyRepository.findAll();
 		}
 
-	public void addAnswer(List<SurveyA> surveyA) {
-//		User userInfo = (User)userRepository.findByUsername(username).get();
+	public void addAnswer(List<SurveyA> surveyA, String username) {
+		User userInfo = (User)userRepository.findByUsername(username).get();
 		
 		for(SurveyA oneSurveyA : surveyA) {
-//			oneSurveyA.setUser(userInfo);
+			oneSurveyA.setUser(userInfo);
 			surveyARepository.save(oneSurveyA);
 		}
+	}
+	
+	public List<SurveyA> aaa(Integer num) {
+		return surveyARepository.findAllBySqNo(num);
 	}
 	
 }
