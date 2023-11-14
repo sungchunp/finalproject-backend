@@ -1,6 +1,7 @@
 package com.example.ssurvey.domain;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -32,17 +36,29 @@ public class FreeBoardReply {
 	@JoinColumn(name = "userNo")
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.EAGER)	
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY)	
 	@JoinColumn(name = "fbNo")
 	private FreeBoard freeBoard;
 	
 	@Column(length = 500)
 	private String fbrContent;
 	
-	@CreationTimestamp
-	private Timestamp fbrCreateDate;
+	@CreatedDate
+	@Column(nullable = false, updatable = false)
+	private String fbrCreateDate;
 	
 
-	
+	@PrePersist
+    protected void onCreate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        fbrCreateDate = dateFormat.format(new Date());
+    }
+
+
+	public FreeBoardReply orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

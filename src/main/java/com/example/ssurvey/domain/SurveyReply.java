@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
+
 @Entity
 @Data
 @SequenceGenerator(
