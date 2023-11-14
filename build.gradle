@@ -46,6 +46,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson
 	implementation 'com.google.code.gson:gson'	// 구글 로그인
 	
+	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation 'org.postgresql:postgresql:42.6.0'
+	
+	
 }
 
 tasks.named('test') {
